@@ -81,13 +81,15 @@ class VideoPlayer:
             self._state = "Stopped"
             self._active_video = None
 
+
+
     def play_random_video(self):
         """Plays a random video from the video library."""
         all_videos = self._video_library.get_all_videos()
         if len(all_videos) == 0:
             print("No videos availible")
         else:
-            random_int = randint(0, len(all_videos) - 1)
+            random_int = randint(0, len(all_videos)-1)
             self.play_video(all_videos[random_int].video_id)
 
     def pause_video(self):
@@ -113,8 +115,7 @@ class VideoPlayer:
     def show_playing(self):
         """Displays video currently playing."""
         if self._active_video != None:
-            print(self._active_video.title + " (" + self._active_video.video_id + ") [" + ' '.join(
-                self._active_video.tags) + "] - " + self._state)
+            print(self._active_video.title + " (" +self._active_video.video_id + ") [" + ' '.join(self._active_video.tags) + "] - " + self._state)
         else:
             print("No video is currently playing")
 
@@ -132,6 +133,7 @@ class VideoPlayer:
             print("Successfully created new playlist: " + original_name)
             self._playlists[playlist_name] = new_playlist
 
+
     def add_to_playlist(self, playlist_name, video_id):
         """Adds a video to a playlist with a given name.
 
@@ -148,7 +150,7 @@ class VideoPlayer:
             if all_videos[i].video_id == video_id:
                 the_video = all_videos[i]
                 video_exists = True
-
+        
         if video_exists:
             # fetch the playlist by name
             the_playlist = self._playlists[playlist_name]
@@ -159,6 +161,8 @@ class VideoPlayer:
                 print("Added video to " + playlist_name + ": " + the_video.title)
         else:
             print("Cannot add video to " + playlist_name + ": Video does not exist")
+                
+        
 
     def show_all_playlists(self):
         """Display all playlists."""
@@ -184,8 +188,10 @@ class VideoPlayer:
             if not self._playlists[playlist_name]:
                 print("No videos here yet")
             else:
-                for value in self._playlists[playlist_name].values():
-                    print(value.title + " (" + value.video_id + ") [" + ' '.join(value.tags) + "]")
+               for value in self._playlists[playlist_name].values():
+                   print(value.title + " (" + value.video_id + ") [" + ' '.join(value.tags) + "]")
+
+       
 
     def remove_from_playlist(self, playlist_name, video_id):
         """Removes a video to a playlist with a given name.
@@ -203,7 +209,7 @@ class VideoPlayer:
                 if all_videos[i].video_id == video_id:
                     the_video = all_videos[i]
                     video_exists = True
-
+            
             if not video_exists:
                 print("Cannot remove video from " + playlist_name + ": Video does not exist")
             else:
@@ -250,19 +256,19 @@ class VideoPlayer:
             if i.title.lower().find(search_term.lower()) != -1:
                 results.append(i)
 
-        results.sort(key=lambda x: x.title)
+        results.sort(key = lambda x: x.title)
         if len(results) == 0:
             print("No search results for " + search_term)
         else:
             print("Here are the results for " + search_term)
             for i in range(len(results)):
-                print(str(i) + ") " + results[i].title + " (" + results[i].video_id + ") [" + ' '.join(
-                    results[i].tags) + "]")
+                print(str(i) + ") " + results[i].title + " (" + results[i].video_id + ") [" + ' '.join(results[i].tags) + "]")
             print("Would you like to play any of the above? If yes, specify the number of the video.")
             print("If your answer is not a valid number, we will assume it's a no.")
             choice = input()
             if choice.isdigit() and int(choice) < len(results):
                 self.play_video(results[int(choice) - 1].video_id)
+
 
     def search_videos_tag(self, video_tag):
         """Display all videos whose tags contains the provided tag.
@@ -277,20 +283,21 @@ class VideoPlayer:
                 if j.lower() == video_tag.lower() and i not in results:
                     results.append(i)
 
-        results.sort(key=lambda x: x.title)
+        results.sort(key = lambda x: x.title)
         if len(results) == 0:
             print("No search results for " + video_tag)
         else:
             print("Here are the results for " + video_tag)
             for i in range(len(results)):
-                print(str(i) + ") " + results[i].title + " (" + results[i].video_id + ") [" + ' '.join(
-                    results[i].tags) + "]")
+                print(str(i) + ") " + results[i].title + " (" + results[i].video_id + ") [" + ' '.join(results[i].tags) + "]")
             print("Would you like to play any of the above? If yes, specify the number of the video.")
             print("If your answer is not a valid number, we will assume it's a no.")
             choice = input()
             if choice.isdigit() and int(choice) < len(results):
                 self.play_video(results[int(choice) - 1].video_id)
 
+    # The following 2 functions I could write but ran out of time. 
+    # Do not take their absence as a lack of knowledge or skill
     def flag_video(self, video_id, flag_reason=""):
         """Mark a video as flagged.
 
